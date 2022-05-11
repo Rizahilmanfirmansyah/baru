@@ -44,12 +44,17 @@
                 </select>
                 -->
                 <label for="jabatan">Pilih Jabatan</label>
-                <select class="form-control select2" style="width: 100%" name="jabatan" id="jabatan">
-                    <option value="Manager">Manager</option>
-                    <option value="Manager">Manager</option>
-                    <option value="Manager">Manager</option>
-                    <option value="Manager">Manager</option>
-                    <option value="Manager">Manager</option>
+                <select class="form-control select2"  style="width: 100%" name="jabatan" id="jabatan">
+                    <option value="Direkektur Utama">Direktur Utama</option>
+                        <option value="Direktur">Direktur </option>
+                        <option value="Direktru Keuangan">Direktur Keuangan</option>
+                        <option value="Direktur Personalia">Direktur Personalia</option>
+                        <option value="Manager">Manager</option>
+                        <option value="Manager Personalia">Manager Personalia</option>
+                        <option value="Manager Pemasaran">Manager Pemasaran</option>
+                        <option value="Manager Pabrik">Manager Pabrik</option>
+                        <option value="Administrasi">Administrasi</option>
+                        <option value="Jajaran Direksi">Jajaran Direksi</option>
                 </select>
                 <!--
                 <label for="jabatan">Jabatan</label>
@@ -62,11 +67,12 @@
             <input type="text" name="jk" class="form-control" id="jk" aria-describedby="jk" placeholder="Masukkan Jabatan">
             </div>
         -->
-        
+        <p>
            <div>
                 <label for="jk">Jenis Kelamin</label>
                 <p><input type="radio" name="jk"  value="L" checked <? $pegawai['jk'] == "L" ?>>Pria   <input type="radio" name="jk"  value="P" <? $pegawai['jk'] == "P"?>>Wanita</p>
             </div>
+        </p>
         
              <div class="form-group">
                 <label for="noktp">NO KTP</label>
@@ -85,8 +91,12 @@
                 <input type="text" name="nokk" class="form-control" id="nokk" aria-describedby="nokk" placeholder="Masukan No KK">
             </div>
             <div class="form-group">
-                <label for="ttl">Tempat Tanggal Lahir</label>
-                <input type="text" name="ttl" class="form-control" id="ttl" aria-describedby="ttl" placeholder="Masukan Tempat Tanggal Lahir">
+                <label for="tempatlahir">Tempat Lahir</label>
+                <input type="text" name="tempatlahir" class="form-control" id="tempatlahir" aria-describedby="tempatlahir" placeholder="Masukan Tempat Lahir">
+            </div>
+            <div class="form-group">
+                <label for="ttl">Tanggal Lahir</label>
+                <input type="date" name="ttl" class="form-control" id="ttl" aria-describedby="ttl" placeholder="Masukan Tempat Tanggal Lahir">
             </div>
             <div class="form-group">
                 <label for="alamatktp">Alamat KTP</label>
@@ -98,20 +108,27 @@
             </div>
             <div class="form-group">
                 <label for="gaji">Gaji</label>
-                <input type="text" name="gaji" class="form-control" id="gaji" aria-describedby="gaji" placeholder="Masukan Gaji">
+                <input type="text" wire:model="gaji" name="gaji"  type-currency="IDR" placeholder="Rp" class="form-control" id="gaji" aria-describedby="gaji" >
             </div>
             <div class="form-group">
                 <label for="tanggalgaji">Tanggal Gajihan</label>
                 <input type="date" name="tanggalgaji" class="form-control" id="tanggalgaji" aria-describedby="tanggalgaji" placeholder="Masukan Tanggal Gajihan">
             </div>
-            <div class="form-group">
-                <label for="norek">NO REK</label>
-                <input type="text" name="norek" class="form-control" id="norek" aria-describedby="norek" placeholder="Masukan NO REKENING">
-            </div>
-            <div class="form-group">
-                <label for="bank">BANK</label>
-                <input type="text" name="bank" class="form-control" id="bank" aria-describedby="bank" placeholder="Masukan Nama Bank">
-            </div>
+            
+            <label for="bank">Pilih Bank</label>
+                <select class="form-control select2"  style="width: 100%" name="bank" id="bank">
+                    <option value="BRI">BRI</option>
+                    <option value="BNI">BNI</option>
+                    <option value="BTN">BTN</option>
+                    <option value="Bank Mandiri">BANK MANDIRI</option>
+                    <option value="Mandiri Syariah">BANK MANDNIRI SYARIAH</option>
+                    <option value="BCA">BCA</option>
+                    <option value="CIMB NIAGA">CIMB NIAGA</option>
+                </select>
+                <div class="form-group">
+                    <label for="norek">NO REK</label>
+                    <input type="text" name="norek" class="form-control" id="norek" aria-describedby="norek" placeholder="Masukan NO REKENING">
+                </div>
             <div class="form-group">
                 <label for="email">EMAIL</label>
                 <input type="text" name="email" class="form-control" id="email" aria-describedby="email" placeholder="Masukan Alamat email">
@@ -120,25 +137,28 @@
                 <label for="nohp">NO HP</label>
                 <input type="text" name="nohp" class="form-control" id="nohp" aria-describedby="nohp" placeholder="Masukan Nomer hp">
             </div>
-            <div class="form-group">
-                <label for="tanggalawal">Tanggal Awal</label>
-                <input type="text" name="tanggalawal" class="form-control" id="tanggalawal" aria-describedby="tanggalawal" placeholder="Masukan Tanggal">
-            </div>
+
             <div class="form-group">
                 <label for="status">Status</label>
-                <input type="text" name="status" class="form-control" id="status" aria-describedby="status" placeholder="Masukan Status">
+                <select class="form-control select2" style="width: 100%" name="status" id="status">
+                    <option value="Tetap">Pekerja Tetap</option>
+                    <option value="Tidak Tetap">Pekerja Tidak tetap</option>
+                    <option value="Paruh Waktu">Part-Time</option>
+
+                </select>
             </div>
+           
             <div class="form-group">
                 <label for="tanggungan">Tanggungan</label>
                 <input type="text" name="tanggungan" class="form-control" id="tanggungan" aria-describedby="tanggungan" placeholder="Masukan Tangungan">
             </div>
             <div class="form-group">
                 <label for="awalmasuk">Awal Masuk</label>
-                <input type="text" name="awalmasuk" class="form-control" id="awalmasuk" aria-describedby="awalmasuk" placeholder="Masukan tanggal Awal Masuk">
+                <input type="date" name="awalmasuk" class="form-control" id="awalmasuk" aria-describedby="awalmasuk" placeholder="Masukan tanggal Awal Masuk">
             </div>
             <div class="form-group">
                 <label for="tanggalmasuk">Tanggal Masuk</label>
-                <input type="text" name="tanggalmasuk" class="form-control" id="tanggalmasuk" aria-describedby="tanggalmasuk" placeholder="Masukan Tanggal Masuk">
+                <input type="date" name="tanggalmasuk" class="form-control" id="tanggalmasuk" aria-describedby="tanggalmasuk" placeholder="Masukan Tanggal Masuk">
             </div>
             <div class="form-group">
                 <label for="berakhir">Berakhir</label>

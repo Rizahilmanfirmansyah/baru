@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\pegawai;
-use Validator;
 use App\Models\Jabatan;
 use Illuminate\Http\Request;
 
@@ -18,7 +17,7 @@ class PegawaisController extends Controller
     {
         $pegawais = pegawai::all();
         $keyword = $request->search;
-        $pegawais = pegawai::where('nama', 'like', "%" . $keyword . "%")->paginate(5);
+        $pegawais = pegawai::where('nama', 'like', "%" . $keyword . "%")->paginate(20);
         return view('pegawais.index', compact('pegawais'))->with('i', (request()->input('page', 1) - 1) * 5);
 
         return view('pegawais.index', compact('pegawais')); 
@@ -48,10 +47,11 @@ class PegawaisController extends Controller
             'nama' => 'required',
             'jabatan' => 'required',
             'jk' => 'required',
-            'noktp' => 'required',
+            'noktp' => 'required|numeric',
             'npwp' => 'required',
             'nobpjs' => 'required',
             'nokk' => 'required',
+            'tempatlahir' =>'required',
             'ttl' => 'required',
             'alamatktp' => 'required',
             'domisili' => 'required',
@@ -61,7 +61,6 @@ class PegawaisController extends Controller
             'bank' => 'required',
             'email' => 'required',
             'nohp' => 'required',
-            'tanggalawal' => 'required',
             'status' => 'required',
             'tanggungan' => 'required',
             'awalmasuk' => 'required',
@@ -82,6 +81,7 @@ class PegawaisController extends Controller
             'npwp' => $request->npwp,
             'nobpjs' => $request->nobpjs,
             'nokk' => $request->nokk,
+            'tempatlahir' => $request->tempatlahir,
             'ttl' => $request->ttl,
             'alamatktp' => $request->alamatktp,
             'domisili' => $request->domisili,
@@ -91,7 +91,6 @@ class PegawaisController extends Controller
             'bank' => $request->bank,
             'email' => $request->email,
             'nohp' => $request->nohp,
-            'tanggalawal' => $request->tanggalawal,
             'status' => $request->status,
             'tanggungan' => $request->tanggungan,
             'awalmasuk' => $request->awalmasuk,
@@ -138,7 +137,7 @@ class PegawaisController extends Controller
     public function update(Request $request, pegawai $pegawai)
     {
         $request->validate([
-            'foto' =>'required',
+            
             'nama' => 'required',
             'jabatan' => 'required',
             'jk' => 'required',
@@ -155,45 +154,28 @@ class PegawaisController extends Controller
             'bank' => 'required',
             'email' => 'required',
             'nohp' => 'required',
-            'tanggalawal' => 'required',
             'status' => 'required',
             'tanggungan' => 'required',
             'awalmasuk' => 'required',
             'tanggalmasuk' => 'required',
             'berakhir' => 'required'   
         ]);
+       
+        //if($request->file('foto') == "")
+    	//{
+    	//	$produk->gambar=$produk->gambar;
 
-        $file = $request->file('foto');
-        $nama_file = time()."_".$file->getClientOriginalName();
-        $tujuan_upload = 'data_file';
-        $file->move($tujuan_upload,$nama_file);
+    //	}
+    	//else
+    	//{
 
-        pegawai::create([
-            'foto' => $nama_file,
-            'nama' => $request->nama,
-            'jabatan' => $request->jabatan,
-            'jk' => $request->jk,
-            'noktp' => $request->noktp,
-            'npwp' => $request->npwp,
-            'nobpjs' => $request->nobpjs,
-            'nokk' => $request->nokk,
-            'ttl' => $request->ttl,
-            'alamatktp' => $request->alamatktp,
-            'domisili' => $request->domisili,
-            'gaji' => $request->gaji,
-            'tanggalgaji' => $request->tanggalgaji,
-            'norek' => $request->norek,
-            'bank' => $request->bank,
-            'email' => $request->email,
-            'nohp' => $request->nohp,
-            'tanggalawal' => $request->tanggalawal,
-            'status' => $request->status,
-            'tanggungan' => $request->tanggungan,
-            'awalmasuk' => $request->awalmasuk,
-            'tanggalmasuk' => $request->tanggalmasuk,
-            'berakhir' => $request->berakhir,
+    	//$filename = time(). '.png';
+    	//$request->file('foto')->storeAs('public/data_file', $filename);
+	   //	$produk->gambar = $filename;
+	//   }
+    //	$produk->save(); 
 
-        ]);
+
 
         $pegawai->update($request->all());
         return redirect()->route('pegawais.index')

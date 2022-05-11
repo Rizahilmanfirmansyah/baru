@@ -2,6 +2,8 @@
 
 @section('content')
 
+
+
 <div class="container mt-5">
     <div class="row justify-content-center align-items-center">
         <div class="card" style="width: 40rem">
@@ -27,7 +29,6 @@
                     <li class="list-group-item"><b>Bank : </b> {{ $pegawai->bank}}</li>
                     <li class="list-group-item"><b>Email : </b> {{ $pegawai->email}}</li>
                     <li class="list-group-item"><b>No hp : </b> {{ $pegawai->nohp}}</li>
-                    <li class="list-group-item"><b>Tgl Awal Masuk : </b> {{ $pegawai->tanggalawal}}</li>
                     <li class="list-group-item"><b>Status : </b> {{ $pegawai->status}}</li>
                     <li class="list-group-item"><b>Tanggungan : </b> {{ $pegawai->tanggungan}}</li>
                     <li class="list-group-item"><b>Awal Masa Kerja : </b> {{ $pegawai->awalmasuk}}</li>

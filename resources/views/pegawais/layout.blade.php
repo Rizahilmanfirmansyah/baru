@@ -8,8 +8,27 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     </head>
     <body>
-        <div class="container">
             @yield('content')
-        </div>
+        @livewireScripts
+        <script>
+            document.querySelectorAll('input[type-currency="IDR"]').forEach((element) => {
+             element.addEventListener('keyup', function(e) {
+             let cursorPostion = this.selectionStart;
+             let value = parseInt(this.value.replace(/[^,\d]/g, ''));
+             let originalLenght = this.value.length;
+               if (isNaN(value)) {
+                   this.value = "";
+               } else {    
+                   this.value = value.toLocaleString('id-ID', {
+                   currency: 'IDR',
+                   style: 'currency',
+                   minimumFractionDigits: 0
+                   });
+                     cursorPostion = this.value.length - originalLenght + cursorPostion;
+                     this.setSelectionRange(cursorPostion, cursorPostion);
+               }
+             });
+           });
+        </script>
     </body>
 </html>

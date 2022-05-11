@@ -12,7 +12,7 @@ class pegawai extends Model
     protected $table = "datapegawai";
     protected $primaryKey = "id";
     protected $fillable = [
-        'foto', 'nama','jabatan' ,'jk','noktp','npwp','nobpjs','nokk','ttl','alamatktp','domisili','gaji','tanggalgaji','norek','bank','email','nohp','tanggalawal','status','tanggungan','awalmasuk','tanggalmasuk','berakhir'
+        'foto', 'nama','jabatan' ,'jk','noktp','npwp','nobpjs','nokk','tempatlahir','ttl','alamatktp','domisili','gaji','tanggalgaji','norek','bank','email','nohp','status','tanggungan','awalmasuk','tanggalmasuk','berakhir'
     ];
 
     //public function jabatanfungsi()
