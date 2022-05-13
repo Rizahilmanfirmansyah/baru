@@ -17,10 +17,12 @@ class PegawaisController extends Controller
     {
         $pegawais = pegawai::all();
         $keyword = $request->search;
-        $pegawais = pegawai::where('nama', 'like', "%" . $keyword . "%")->paginate(20);
+        $pegawais = pegawai::where('nama', 'like', "%" . $keyword . "%")->orWhere('jabatan', 'like', "%" . $keyword . "%")->paginate(3);
         return view('pegawais.index', compact('pegawais'))->with('i', (request()->input('page', 1) - 1) * 5);
-
         return view('pegawais.index', compact('pegawais')); 
+
+        
+       
     }
 
     /**
@@ -195,11 +197,9 @@ class PegawaisController extends Controller
         ->with('success', 'Delete Sukses.');
     }
 
-    public function cari(Request $request)
+    public function search(Request $request)
     {
-        $cari = $request->cari;
-        $users = User::where('name', 'like', "%" . $cari . "%")->paginate(5);
-        return view('pegawais.index', compact('users'))->with('i', (request()->input('page', 1) - 1) * 5);
+       
     }
     
 }

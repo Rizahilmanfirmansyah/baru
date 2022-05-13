@@ -15,9 +15,9 @@ class pegawai extends Model
         'foto', 'nama','jabatan' ,'jk','noktp','npwp','nobpjs','nokk','tempatlahir','ttl','alamatktp','domisili','gaji','tanggalgaji','norek','bank','email','nohp','status','tanggungan','awalmasuk','tanggalmasuk','berakhir'
     ];
 
-    //public function jabatanfungsi()
-   // {
-      //  return $this->belongsTo(Jabatan::class, 'jabatan_id');
+    public function jabatanfungsi()
+      {
+        return $this->belongsTo(Jabatan::class, 'jabatan_id');
         
-    //}
+    }
 }

@@ -3,11 +3,79 @@
 @extends('pegawais.layout')
 
 @section('content')
+<!--
+<style>
+    .freeze-table{
+        border-spacing: 0ch;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 14px;
+        padding: 0;
+        border: 1px solid #ccc;
+    }
+    thead th{
+        top: 0;
+        position: sticky;
+        background-color: white;
+        color: #fff;
+        z-index: 20;
+        min-height: 30px;
+        height: 30px;
+        text-align: left;
+    }
+    tr:nth-child(even){
+        background-color: #f2f2f2;
+    }
+
+    th, td{
+        padding: 0;
+        outline: 1px solid #ccc;
+        border: none;
+        outline-offset: -1px;
+        padding-left: 30px;
+        width: 140px;
+        
+    }
+    tr{
+        min-height: 25px;
+        height: 25px;
+    }
+    .col-id-no{
+        left: 0;
+        position: sticky;
+    }
+    .col-first-name{
+        left: 80px;
+        position: sticky;
+    }
+    .fixed-header{
+        z-index: 50;
+    }
+    tr:nth-child(even) td[scope=row]{
+        background-color: #f2f2f2;
+    }
+    tr:nth-child(odd) td[scope=row]{
+        background-color: white;
+    }
+</style>
+-->
+
+
+
 
 <style>
-    tr th {
+     .freeze-table{
+        border-spacing: 0ch;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 14px;
+        padding: 0;
+        border: 1px solid #ccc;
+     }
+tr th {
     white-space: pre-wrap !important;
     text-align: center;
+    background-color: white;
+    color: black;
+    
 }
 
 tr td {
@@ -15,35 +83,74 @@ tr td {
     text-align: center;
 }
 
-.first-column {
+.kolum{
     position: sticky;
     left: 0px;
     width: 140px;
     background-color: aliceblue;
     white-space: nowrap;
+
+}
+.second-column {
+    position: sticky;
+    left: 330px;
+    width: 140px;
+    background-color: white;
+    white-space: nowrap;
+}
+.first-column {
+    position: sticky;
+    left: 180px;
+    width: 140px;
+    background-color: white;
+    white-space: nowrap;
+}
+.third-column {
+    position: sticky;
+    left: 43px;
+    width: 140px;
+    background-color: white;
+    white-space: nowrap;
+}
+.fourth-column {
+    position: sticky;
+    left: 6px;
+    width: 140px;
+    background-color: white;
+    white-space: nowrap;
 }
 
+
+
+
 .first-column.header {
-    background-color: grey;
+    background-color: aliceblue;
 }
 
     
     </style>
-
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet" />
 <div class="container">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet" />
-    <div class="row">
+        <div class="row">
         <div class="table-responsive">
        <div class="col-md-12">
-    <body>
+    <body >
+        <!--
+        <div class="">
+            <img src="{{ asset('poto/download.png')}}">
+        </div>
+    -->
         <div class="row">
             <div class="col-lg-12 margin-tb mt-3 mb-3">
                 <div class="text-center">
                     <h2>KELOLA DATA PEGAWAI</h2>
                 </div>
+            <div class="col-mb-3">
                 <div class="text-left">
                     <a class="btn btn-success" href="{{ route('pegawais.create') }}">Tambah Pegawai</a>
                 </div>
+                
+            </div> 
             </div>
         </div>
        
@@ -60,52 +167,58 @@ tr td {
          <div class="col-mb-3">
            <form action="?" class="col-auto ms-auto">
             <div class="input-group">
-               <p> <input type="text" name="search" value="{{ request()->search }}" 
-               placeholder="Search" class="form-control"></p>
+               <input type="text" name="search" value="{{ request()->search }}" placeholder="Search" class="form-control">
+              <br><br>
                <button class="btn btn-primary" type="submit">Search</button>
+               &nbsp;
+               <a class="btn btn-primary" href="{{ route('pegawais.index')}}">Refresh</a>
             </div>
           </div>
         </form>
        </div> 
        
-            <table class="table table-bordered table-striped">
+       
+       <table class="table table-bordered table-striped">
         <thead>                  
             <tr >
-                <th class="col-1">No</th>
-                <th class="col-2" style="text-align: center">Foto</th>
-                <th class="first-column header">Nama</th>
-                <th class="second-column" style="text-align: center">Jabatan</th>
-                <th class="col-5">Jenis Kelamin</th>
-                <th class="col-3" >No ktp</th>
-                <th class="col-3" >NPWP</th>
-                <th class="col-3" >NO BPJS Kas</th>
-                <th class="col-3" >NO KK</th>
-                <th class="col-3" >Tempat Lahir</th>
-                <th class="col-3" >Tanggal Lahir</th>
-                <th class="col-3" >Alamat KTP</th>
-                <th class="col-3" >Alamat Domisili</th>
-                <th class="col-3" >Gaji</th>
-                <th class="col-3" >Tanggal Gajian</th>
-                <th class="col-3" >NO REK</th>
-                <th class="col-3" >BANK</th>
-                <th class="col-3" >Email</th>
-                <th class="col-3" >No Hp</th>
-                <th class="col-3" >Status</th>
-                <th class="col-3" >Tanggungan</th>
-                <th class="col-3" >Awal Masa Kerja</th>
-                <th class="col-3" >Tanggal Masuk</th>
-                <th class="col-3" >Berakhir Masa Kerja</th>
-                <th class="col-2" >Action</th>
+                <th class="fourth-column">N0</th>
+                <th class="third-column" >FOTO</th>
+                <th class="first-column">NAMA</th>
+                <th class="second-column" >JABATAN</th>
+                <th class="">JENIS KELAMIN</th>
+                <th class="" >NO KTP</th>
+                <th class="" >NPWP</th>
+                <th class="" >NO BPJS KAS</th>
+                <th class="" >NO KK</th>
+                <th class="" >TEMPAT LAHIR</th>
+                <th class="" >Tanggal Lahir</th>
+                <th class="" >ALAMAT KTP</th>
+                <th class="" >DOMISILI</th>
+                <th class="" >GAJI</th>
+                <th class="" >TANGGAL GAJI</th>
+                <th class="" >NO REK</th>
+                <th class="" >BANK</th>
+                <th class="" >EMAIL</th>
+                <th class="" >NO HP</th>
+                <th class="" >STATUS</th>
+                <th class="" >TANGGUNGAN</th>
+                <th class="" >AWAL MASA KERJA</th>
+                <th class="" >TANGGAL MASUK</th>
+                <th class="" >BERAKHIR</th>
+                <th class="" >ACTION</th>
             </tr>
         </thead>
-            @foreach ($pegawais as $key => $pegawai)
+        @php
+            $nomor = 1 + (($pegawais->currentPage()-1) * $pegawais->perPage());
+        @endphp
+            @foreach ($pegawais as $pegawai)
             <tr > 
-                <td class="col-1">{{ $key+1 }}</td>
-                <td class="col-2"><img width="120px" src="{{ url('/data_file/'.$pegawai->foto)}}"> </td>
-                <td class="first-column header">{{ $pegawai->nama }}</td>
+                <td class="fourth-column">{{ $nomor++ }}</td>
+                <td class="third-column"><img width="120px" src="{{ url('/data_file/'.$pegawai->foto)}}"> </td>
+                <td class="first-column ">{{ $pegawai->nama }}</td>
                 <td class="second-column">{{ $pegawai->jabatan}}</td>
-                <td class="col-4" style="text-align: center">{{ $pegawai->jk }}</td>
-                <td class="col-3" style="text-align: center">{{ $pegawai->noktp }}</td>
+                <td class="">{{ $pegawai->jk }}</td>
+                <td class="">{{ $pegawai->noktp }}</td>
                 <td class="col-3">{{ $pegawai->npwp}}</td>
                 <td class="col-3">{{ $pegawai->nobpjs }}</td>
                 <td class="col-3">{{ $pegawai->nokk }}</td>
@@ -113,7 +226,7 @@ tr td {
                 <td class="col-3">{{ $pegawai->ttl }}</td>
                 <td class="col-3">{{ $pegawai->alamatktp}}</td>
                 <td class="col-3">{{ $pegawai->domisili}}</td>
-                <td class="col-3">{{$pegawai->gaji}} </td>
+                <td class="col-3">{{ $pegawai->gaji }} </td>
                 <td class="col-3">{{ $pegawai->tanggalgaji }}</td>
                 <td class="col-3">{{ $pegawai->norek}}</td>
                 <td class="col-3">{{ $pegawai->bank}}</td>
@@ -128,6 +241,8 @@ tr td {
                     <form action="{{ route('pegawais.destroy',$pegawai->id) }}" method="POST">
     
                         <a class="btn btn-info" href="{{ route('pegawais.show',$pegawai->id)}}">Show</a>
+
+                        
      
                         <a class="btn btn-primary" href="{{ route('pegawais.edit',$pegawai->id) }}">Edit</a>
        
@@ -138,8 +253,9 @@ tr td {
                     </form>
                 </td>
             </tr>
-            @endforeach
+            @endforeach 
         </table>
+        {{ $pegawais->links()}}
         </div>
     </body>
     @endsection
