@@ -1,11 +1,13 @@
 @extends('pegawais.layout')
   
 @section('content')
-   
+
+<body>
 <div class="container mt-5">
    
     <div class="row justify-content-center align-items-center">
-        <div class="card" style="width: 50rem;">
+        <div class="card " style="width: 50rem;">
+            <i class="bi bi-person-fill"></i>
             <div class="card-header">
             EDIT PEGAWAI
             </div>
@@ -27,27 +29,31 @@
                     <label for="nama">NAMA</label>
                     <input type="text" name="nama" class="form-control" id="nama" value="{{$pegawai->nama}}" aria-describedby="nama" placeholder="Masukkan Nama">
                 </div>
-                <!--
-                <img width="120px" src="{{ url('/data_file/',$pegawai->foto)}}">
+                
+               
+             <!-- <p><img width="120px" src="{{ url('/data_file/',$pegawai->foto)}}"></p>
+               
+               <p> <input type="text" class="form-control" value="{{$pegawai->foto}}"></p>
                 <div class="form-group">
                     <label for="foto">Lampirkan Foto</label>
                     <p><input type="file"  name="foto" id="foto"></p>
-                </div>
-                -->
+                </div>-->
                 
+                
+                <!--
+                <input type="text"  class="form-control" value="{{ $pegawai->foto }}" name="foto">
+
+                <p>
+                <div class="form-control">
+                <input type="file" name="foto">
+                </div>
+                </p>
+            -->
                 
                 <div class="form-group">
-                    <!--
-                    <label for="jabatan_id">Pilih Jabatan</label>
+                   <label for="jabatan">JABATAN</label>
                     <select class="form-control select2" style="width: 100%" name="jabatan_id" id="jabatan_id">
-                        @foreach ( $jab as $item )
-                        <option value="{{ $item->id}}">{{ $item->jabatansip}}</option>
-                        @endforeach
-                    </select>
-                    -->
-                    <label for="jabatan">JABATAN</label>
-                    <select class="form-control select2" style="width: 100%" name="jabatan" id="jabatan">
-                        <option selected disabled>Pilih Jabatan</option>
+                        <option value="{{$pegawai->jabatan_id}}">{{$pegawai->jabatan_id}}</option>
                         <option value="Direkektur Utama">Direktur Utama</option>
                         <option value="Direktur">Direktur </option>
                         <option value="Direktru Keuangan">Direktur Keuangan</option>
@@ -57,8 +63,9 @@
                         <option value="Manager Pemasaran">Manager Pemasaran</option>
                         <option value="Manager Pabrik">Manager Pabrik</option>
                         <option value="Administrasi">Administrasi</option>
-                        <option value="Jajaran Direksi">Jajaran Direksi</option>
+                        <option value="Jajaran Direksi">Jajaran Direksii</option>
                     </select>
+                
                     <!--
                     <label for="jabatan">Jabatan</label>
                     <input type="text" name="jabatan" class="form-control" id="jabatan" aria-describedby="jabatan" placeholder="Masukkan Jabatan">
@@ -120,19 +127,33 @@
                     <label for="norek">NO REK</label>
                     <input type="text" name="norek" value="{{$pegawai->norek}}" class="form-control" id="norek" aria-describedby="norek" placeholder="Masukan NO REKENING">
                 </div>
+
                 <div class="form-group">
                     <label for="bank">KATEGORI BANK</label>
+                    <select class="form-control select2" style="width:100%" name="bank" id="bank">
+
+                        <option value="{{$pegawai->bankfungsi->banksip}}">{{$pegawai->bankfungsi->banksip}}</option>
+
+                        @foreach( $bank as $item)
+                        <option value="{{$item->id}}">{{$item->banksip}}</option>
+
+                        @endforeach
+
+                    </select>
+                </div>
+              <!-- <div class="form-group">
+                    <label for="bank">  KATEGORI BANK </label>
                     <select class="form-control select2" style="width: 100%" name="bank" id="bank">
-                        <option selected disabled>PILIH KATEGORI BANK</option>
+                        <option value="{{$pegawai->bank}}">{{$pegawai->bank}}</option>
                         <option value="BRI">BRI</option>
                         <option value="BNI">BNI</option>
                         <option value="BTN">BTN</option>
-                        <option value="Bank Mandiri">BANK MANDIRI</option>
-                        <option value="Mandiri Syariah">BANK MANDNIRI SYARIAH</option>
                         <option value="BCA">BCA</option>
-                        <option value="CIMB NIAGA">CIMB NIAGA</option>
+                        <option value="BANK SYARIAH INDONESIA">BSI</option>
+                        <option value="BANK MANDIRI">BANK MANDIRI</option>
+                        <option value="CIMB NIAGA">CIMB NIAGA</option> 
                     </select>
-                </div>
+                </div>-->
                 <div class="form-group">
                     <label for="email">EMAIL</label>
                     <input type="text" name="email" value="{{$pegawai->email}}" class="form-control" id="email" aria-describedby="email" placeholder="Masukan Alamat email">
@@ -144,7 +165,7 @@
                 <div class="form-group">
                     <label for="status">STATUS</label>
                     <select class="form-control select2"  style="width: 100%" name="status">
-                        <option selected disabled>Pilih Item</option>
+                        <option value="{{$pegawai->status}}">{{$pegawai->status}}</option>
                         <option  value="Pekerja Tetap">Pekerja Tetap</option>
                         <option  value="Pekerja Tidak Tetap">Pekerja tidak tetap</option>
                         <option  value="Paruh Waktu">Part Time</option>
@@ -155,7 +176,7 @@
                     <input type="text" name="tanggungan" value="{{$pegawai->tanggungan}}" class="form-control" id="tanggungan" aria-describedby="tanggungan" placeholder="Masukan Tangungan">
                 </div>
                 <div class="form-group">
-                    <label for="awalmasuk">AWAL MASUK</label>
+                    <label for="awalmasuk">AWAL MASA KERJA</label>
                     <input type="date" name="awalmasuk" value="{{$pegawai->awalmasuk}}" class="form-control" id="awalmasuk" aria-describedby="awalmasuk" placeholder="Masukan tanggal Awal Masuk">
                 </div>
                 <div class="form-group">
@@ -173,4 +194,5 @@
                 </div>
             </div>
             </div>
+</body>
 @endsection

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\pegawai;
 use App\Models\Jabatan;
+use App\Models\bank;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
 class PegawaisController extends Controller
@@ -15,14 +17,8 @@ class PegawaisController extends Controller
      */
     public function index(Request $request)
     {
-        $pegawais = pegawai::all();
-        $keyword = $request->search;
-        $pegawais = pegawai::where('nama', 'like', "%" . $keyword . "%")->orWhere('jabatan', 'like', "%" . $keyword . "%")->paginate(3);
-        return view('pegawais.index', compact('pegawais'))->with('i', (request()->input('page', 1) - 1) * 5);
+        $pegawais = pegawai::with('jabatanfungsi', 'bankfungsi')->paginate(15);
         return view('pegawais.index', compact('pegawais')); 
-
-        
-       
     }
 
     /**
@@ -33,7 +29,8 @@ class PegawaisController extends Controller
     public function create()
     {
         $jab = Jabatan::all();
-        return view('pegawais.create', compact('jab'));
+        $bank = bank::all();
+        return view('pegawais.create', compact('jab', 'bank'));                                                                                                                                                                                                                                                           
     }
 
     /**
@@ -47,7 +44,7 @@ class PegawaisController extends Controller
         $this->validate($request, [
             'foto' =>'required',
             'nama' => 'required',
-            'jabatan' => 'required',
+            'jabatan_id' => 'required',       
             'jk' => 'required',
             'noktp' => 'required|numeric',
             'npwp' => 'required',
@@ -74,10 +71,13 @@ class PegawaisController extends Controller
         $tujuan_upload = 'data_file';
         $file->move($tujuan_upload,$nama_file);
 
-        pegawai::create([
+       // $foto = $request->file('foto');
+        //$foto->storeAs('public/data_file', $foto->hashName());
+
+        $pegawai = pegawai::create([
             'foto' => $nama_file,
             'nama' => $request->nama,
-            'jabatan' => $request->jabatan,
+            'jabatan_id' => $request->jabatan_id,
             'jk' => $request->jk,
             'noktp' => $request->noktp,
             'npwp' => $request->npwp,
@@ -125,8 +125,11 @@ class PegawaisController extends Controller
     public function edit(pegawai $pegawai)
     {
         $jab = Jabatan::all();
+        $bank = bank::all();
         $pegawais = pegawai::with('jabatanfungsi');
-        return view('pegawais.edit', compact('pegawai', 'jab'));
+
+        //$ft = pegawai::findorfail($pegawai);
+        return view('pegawais.edit', compact('pegawai', 'jab', 'bank'));
     }
 
     /**
@@ -138,10 +141,10 @@ class PegawaisController extends Controller
      */
     public function update(Request $request, pegawai $pegawai)
     {
-        $request->validate([
+        $this->validate($request, [
             
             'nama' => 'required',
-            'jabatan' => 'required',
+            'jabatan_id' => 'required',
             'jk' => 'required',
             'noktp' => 'required',
             'npwp' => 'required',
@@ -162,7 +165,70 @@ class PegawaisController extends Controller
             'tanggalmasuk' => 'required',
             'berakhir' => 'required'   
         ]);
-       
+        
+        $pegawai = pegawai::findOrFail($pegawai->id);
+
+        if($request->file('foto')== ""){
+            $pegawai->update([
+            'nama' => $request->nama,
+            'jabatan_id' => $request->jabatan_id,
+            'jk' => $request->jk,
+            'noktp' => $request->noktp,
+            'npwp' => $request->npwp,
+            'nobpjs' => $request->nobpjs,
+            'nokk' => $request->nokk,
+            'tempatlahir' => $request->tempatlahir,
+            'ttl' => $request->ttl,
+            'alamatktp' => $request->alamatktp,
+            'domisili' => $request->domisili,
+            'gaji' => $request->gaji,
+            'tanggalgaji' => $request->tanggalgaji,
+            'norek' => $request->norek,
+            'bank' => $request->bank,
+            'email' => $request->email,
+            'nohp' => $request->nohp,
+            'status' => $request->status,
+            'tanggungan' => $request->tanggungan,
+            'awalmasuk' => $request->awalmasuk,
+            'tanggalmasuk' => $request->tanggalmasuk,
+            'berakhir' => $request->berakhir
+            ]);
+        } else {
+            Storage::disk('local')->delete('/data_file/'.$pegawai->foto);
+
+            $foto = $request->file('foto');
+            $foto->storeAs('/data_file/', $foto->hashName());
+
+            $pegawai->update([
+                'foto' => $foto->hashName(),
+                'nama' => $request->nama,
+                'jabatan_id' => $request->jabatan_id,
+                'jk' => $request->jk,
+                'noktp' => $request->noktp,
+                'npwp' => $request->npwp,
+                'nobpjs' => $request->nobpjs,
+                'nokk' => $request->nokk,
+                'tempatlahir' => $request->tempatlahir,
+                'ttl' => $request->ttl,
+                'alamatktp' => $request->alamatktp,
+                'domisili' => $request->domisili,
+                'gaji' => $request->gaji,
+                'tanggalgaji' => $request->tanggalgaji,
+                'norek' => $request->norek,
+                'bank' => $request->bank,
+                'email' => $request->email,
+                'nohp' => $request->nohp,
+                'status' => $request->status,
+                'tanggungan' => $request->tanggungan,
+                'awalmasuk' => $request->awalmasuk,
+                'tanggalmasuk' => $request->tanggalmasuk,
+                'berakhir' => $request->berakhir
+            ]);
+        }
+        
+
+
+
         //if($request->file('foto') == "")
     	//{
     	//	$produk->gambar=$produk->gambar;
@@ -177,11 +243,29 @@ class PegawaisController extends Controller
 	//   }
     //	$produk->save(); 
 
+   // $id = $request->idPegawai;
+     //$pegawais = pegawai::where('id', $id)->get();    
+    //if($request->foto){
+      //     Storage::delete($pegawais->foto);
+        //   $foto = $request->file('foto')->store("/data_file/");
+    //}else{
+      //     $foto = $pegawai->foto;
+    //}
+
+   
+       // if($pegawai){
+         //   return redirect()->route('pegawais.index')->with(['success' => 'Berhasil']);
+
+        //}else{
+
+          //  return rederect()->route('pegawais.index')->with(['error' => 'Error']);
+
+        //}
 
 
         $pegawai->update($request->all());
         return redirect()->route('pegawais.index')
-            ->with('success', 'Update sukses.');
+         ->with('success', 'Update sukses.');
     }
 
     /**
@@ -199,7 +283,9 @@ class PegawaisController extends Controller
 
     public function search(Request $request)
     {
-       
+        $keyword = $request->search;
+        $pegawais = pegawai::where('nama', 'like', "%" . $keyword . "%")->orWhere('jabatan_id', 'like', "%" . $keyword . "%")->paginate(10);
+        return view('pegawais.index', compact('pegawais'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
     
 }

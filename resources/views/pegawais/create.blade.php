@@ -2,6 +2,7 @@
   
 @section('content')
    
+<body  >
 <div class="container mt-5">
    
     <div class="row justify-content-center align-items-center">
@@ -35,6 +36,7 @@
             
             
             <div class="form-group">
+               
                 <!--
                 <label for="jabatan_id">Pilih Jabatan</label>
                 <select class="form-control select2" style="width: 100%" name="jabatan_id" id="jabatan_id">
@@ -42,9 +44,10 @@
                     <option value="{{ $item->id}}">{{ $item->jabatansip}}</option>
                     @endforeach
                 </select>
-                -->
+            -->
+                
                 <label for="jabatan">JABATAN</label>
-                <select class="form-control select2"  style="width: 100%" name="jabatan" id="jabatan">
+                <select class="form-control select2"  style="width: 100%" name="jabatan_id" id="jabatan_id">
                     <option selected disabled>Pilih Jabatan</option>
                     <option value="Direkektur Utama">Direktur Utama</option>
                         <option value="Direktur">Direktur </option>
@@ -58,6 +61,7 @@
                         <option value="Administrasi">Administrasi</option>
                         <option value="Jajaran Direksi">Jajaran Direksi</option>
                 </select>
+            
                 <!--
                 <label for="jabatan">Jabatan</label>
                 <input type="text" name="jabatan" class="form-control" id="jabatan" aria-describedby="jabatan" placeholder="Masukkan Jabatan">
@@ -72,7 +76,7 @@
         <p>
            <div>
                 <label for="jk">JENIS KELAMIN</label>
-                <p><input type="radio" name="jk"  value="L" checked <? $pegawai['jk'] == "L" ?>>Pria  &nbsp; <input type="radio" name="jk"  value="P" <? $pegawai['jk'] == "P"?>>Wanita</p>
+                <p><input type="radio" name="jk"  value="L" checked <? $pegawai['jk'] == "L" ?> >Pria  &nbsp; <input type="radio" name="jk"  value="P" <? $pegawai['jk'] == "P"?> >Wanita</p>
             </div>
         </p>
         
@@ -89,7 +93,7 @@
                 <input type="text" name="nobpjs" class="form-control" id="nobpjs" aria-describedby="nobpjs" placeholder="Masukan NO BPJS">
             </div>
             <div class="form-group">
-                <label for="nokk">NO KK</label>
+                <label for="nokk">NO KARTU KELUARGA</label>
                 <input type="text" name="nokk" class="form-control" id="nokk" aria-describedby="nokk" placeholder="Masukan No KK">
             </div>
             <div class="form-group">
@@ -116,10 +120,24 @@
                 <label for="tanggalgaji">TANGGAL GAJI</label>
                 <input type="date" name="tanggalgaji" class="form-control" id="tanggalgaji" aria-describedby="tanggalgaji" placeholder="Masukan Tanggal Gajihan">
             </div>
+
+            <div class="form-group">
+                <label for="bank">KATEGORI BANK</label>
+                <select class="form-control select2" style="width:100%" name="bank" id="bank">
+
+                    <option selected disabled>Pilih Kategori</option>
+
+                    @foreach( $bank as $item)
+                    <option value="{{$item->id}}">{{$item->banksip}}</option>
+
+                    @endforeach
+
+                </select>
+            </div>
             
-            <label for="bank">KATEGORI BANK</label>
+           <!-- <label for="bank">KATEGORI BANK</label>
                 <select class="form-control select2"  style="width: 100%" name="bank" id="bank">
-                    <option selected disabled>Pilih Kategori Bank</option>
+                    <option selected disabled>Pilih Bank</option>
                     <option value="BRI">BRI</option>
                     <option value="BNI">BNI</option>
                     <option value="BTN">BTN</option>
@@ -127,7 +145,16 @@
                     <option value="Mandiri Syariah">BANK MANDNIRI SYARIAH</option>
                     <option value="BCA">BCA</option>
                     <option value="CIMB NIAGA">CIMB NIAGA</option>
-                </select>
+                    
+                    @foreach( $bank as $item)
+
+                    <option value="{{ $item->id}}">{{$item->banksip}}</option>
+
+                    @endforeach
+
+                    
+                   
+                </select>-->
                 <P>
                 <div class="form-group">
                     <label for="norek">NO REK</label>
@@ -159,7 +186,7 @@
                 <input type="text" name="tanggungan" class="form-control" id="tanggungan" aria-describedby="tanggungan" placeholder="Masukan Tangungan">
             </div>
             <div class="form-group">
-                <label for="awalmasuk">AWAL MASUK</label>
+                <label for="awalmasuk">AWAL MASA KERJA</label>
                 <input type="date" name="awalmasuk" class="form-control" id="awalmasuk" aria-describedby="awalmasuk" placeholder="Masukan tanggal Awal Masuk">
             </div>
             <div class="form-group">
@@ -177,4 +204,5 @@
         </div>
     </div>
     </div>
+</body>
 @endsection

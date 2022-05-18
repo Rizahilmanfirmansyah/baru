@@ -24,7 +24,7 @@ Route::get('/ok', function(){
     return view('main');
 });
 
-//Route::get('/search', [PegawaisController::class, 'search'])->name('search');
+Route::get('/search', [PegawaisController::class, 'search'])->name('search');
 
 
 

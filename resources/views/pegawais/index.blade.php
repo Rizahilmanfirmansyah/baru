@@ -3,7 +3,7 @@
 @extends('pegawais.layout')
 
 @section('content')
-<!--
+
 <style>
     .freeze-table{
         border-spacing: 0ch;
@@ -14,7 +14,6 @@
     }
     thead th{
         top: 0;
-        position: sticky;
         background-color: white;
         color: #fff;
         z-index: 20;
@@ -24,6 +23,7 @@
     }
     tr:nth-child(even){
         background-color: #f2f2f2;
+           
     }
 
     th, td{
@@ -56,8 +56,13 @@
     tr:nth-child(odd) td[scope=row]{
         background-color: white;
     }
+    .table-container{
+        width: 500px;
+        height: 300px;
+        overflow: scroll;
+    }
 </style>
--->
+
 
 
 
@@ -70,69 +75,77 @@
         padding: 0;
         border: 1px solid #ccc;
      }
-tr th {
-    white-space: pre-wrap !important;
-    text-align: center;
-    background-color: white;
-    color: black;
+     tr th {
+        top: 0;
+        
+        position: sticky;
+        color: #fff;
+        z-index: 20;
+        min-height: 30px;
+        height: 30px;
+        text-align: left;
     
-}
-
-tr td {
-    white-space: nowrap;
-    text-align: center;
-}
-
-.kolum{
-    position: sticky;
-    left: 0px;
-    width: 140px;
-    background-color: aliceblue;
-    white-space: nowrap;
-
-}
-.second-column {
-    position: sticky;
-    left: 330px;
-    width: 140px;
-    background-color: white;
-    white-space: nowrap;
-}
-.first-column {
-    position: sticky;
-    left: 180px;
-    width: 140px;
-    background-color: white;
-    white-space: nowrap;
-}
-.third-column {
-    position: sticky;
-    left: 43px;
-    width: 140px;
-    background-color: white;
-    white-space: nowrap;
-}
-.fourth-column {
-    position: sticky;
-    left: 6px;
-    width: 140px;
-    background-color: white;
-    white-space: nowrap;
-}
-
-
-
-
-.first-column.header {
-    background-color: aliceblue;
-}
-
+        white-space: pre-wrap !important;
+        text-align: center;
+        background-color: white;
+        color: black;
     
-    </style>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet" />
-<div class="container">
+    }
+
+    tr td {
+       white-space: nowrap;
+       text-align: center;
+    }
+
+    .kolum{
+       position: sticky;
+       left: 0px;
+       width: 140px;
+       background-color: aliceblue;
+       white-space: nowrap;
+
+    }
+    .second-column {
+       position: sticky;
+       left: 350px;
+       width: 140px;
+       background-color: aliceblue;
+       white-space: nowrap;
+    }
+   .first-column {
+       position: sticky;
+       left: 180px;
+       width: 140px;
+       background-color: aliceblue;
+       white-space: nowrap;
+    }
+  .third-column {
+       position: sticky;
+       left: 43px;
+       width: 140px;
+       background-color: aliceblue;
+       white-space: nowrap;
+    }
+   .fourth-column {
+       position: sticky;
+       left: 6px;
+       width: 140px;
+       background-color: aliceblue;
+       white-space: nowrap;
+    }
+
+   .first-column.header {
+       background-color: aliceblue;
+    }
+     </style>
+
+
+ 
+     <body  >
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet" />
+        <div class="container">
         <div class="row">
-        <div class="table-responsive">
+                
        <div class="col-md-12">
     <body >
         <!--
@@ -148,24 +161,14 @@ tr td {
             <div class="col-mb-3">
                 <div class="text-left">
                     <a class="btn btn-success" href="{{ route('pegawais.create') }}">Tambah Pegawai</a>
-                </div>
-                
+                </div> 
             </div> 
             </div>
         </div>
-       
-        @if ($message = Session::get('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong><p>{{ $message }}</p></strong>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-        @endif
         
        <div class="row">
          <div class="col-mb-3">
-           <form action="?" class="col-auto ms-auto">
+           <form action="/search" class="col-auto ms-auto">
             <div class="input-group">
                <input type="text" name="search" value="{{ request()->search }}" placeholder="Search" class="form-control">
               <br><br>
@@ -176,22 +179,34 @@ tr td {
           </div>
         </form>
        </div> 
+
+       <div>
+       @if ($message = Session::get('success'))
+       <div class="alert alert-success " role="alert">
+           <strong><p>{{ $message }}</p></strong>
+           <!--<button type="button" class="" data-dismiss="alert" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+           </button>-->
+         </div>
+       @endif
+       </div>
        
-       
-       <table class="table table-bordered table-striped">
-        <thead>                  
-            <tr >
-                <th class="fourth-column">N0</th>
-                <th class="third-column" >FOTO</th>
-                <th class="first-column">NAMA</th>
-                <th class="second-column" >JABATAN</th>
-                <th class="">JENIS KELAMIN</th>
+       <!--<div style="overflow: scroll;">
+       -->
+       <table class="table table-bordered table-striped table-success">
+        <thead>                   
+            <tr class="">
+                <th class="" >NO</th>
+                <th class="" >FOTO</th>
+                <th class="" >NAMA</th>
+                <th class="" >JABATAN</th>
+                <th class="" >JENIS KELAMIN</th>
                 <th class="" >NO KTP</th>
                 <th class="" >NPWP</th>
                 <th class="" >NO BPJS KAS</th>
-                <th class="" >NO KK</th>
+                <th class="" >NO KARTU KELUARGA</th>
                 <th class="" >TEMPAT LAHIR</th>
-                <th class="" >Tanggal Lahir</th>
+                <th class="" >TANGGAL LAHIR</th>
                 <th class="" >ALAMAT KTP</th>
                 <th class="" >DOMISILI</th>
                 <th class="" >GAJI</th>
@@ -212,11 +227,11 @@ tr td {
             $nomor = 1 + (($pegawais->currentPage()-1) * $pegawais->perPage());
         @endphp
             @foreach ($pegawais as $pegawai)
-            <tr > 
+            <tr class=""> 
                 <td class="fourth-column">{{ $nomor++ }}</td>
                 <td class="third-column"><img width="120px" src="{{ url('/data_file/'.$pegawai->foto)}}"> </td>
                 <td class="first-column ">{{ $pegawai->nama }}</td>
-                <td class="second-column">{{ $pegawai->jabatan}}</td>
+                <td class="second-column">{{ $pegawai->jabatan_id}}</td>
                 <td class="">{{ $pegawai->jk }}</td>
                 <td class="">{{ $pegawai->noktp }}</td>
                 <td class="col-3">{{ $pegawai->npwp}}</td>
@@ -229,7 +244,7 @@ tr td {
                 <td class="col-3">{{ $pegawai->gaji }} </td>
                 <td class="col-3">{{ $pegawai->tanggalgaji }}</td>
                 <td class="col-3">{{ $pegawai->norek}}</td>
-                <td class="col-3">{{ $pegawai->bank}}</td>
+                <td class="col-3">{{ $pegawai->bankfungsi->banksip}}</td>
                 <td class="col-3">{{ $pegawai->email}}</td>
                 <td class="col-3">{{ $pegawai->nohp }}</td>
                 <td class="col-3">{{ $pegawai->status}}</td>
@@ -240,16 +255,16 @@ tr td {
                 <td class="col-2">
                     <form action="{{ route('pegawais.destroy',$pegawai->id) }}" method="POST">
     
-                        <a class="btn btn-info" href="{{ route('pegawais.show',$pegawai->id)}}">Show</a>
+                        <a class="btn btn-info glyphicon glyphicon-user" href="{{ route('pegawais.show',$pegawai->id)}}"></a>
 
                         
      
-                        <a class="btn btn-primary" href="{{ route('pegawais.edit',$pegawai->id) }}">Edit</a>
+                        <a class="btn btn-primary glyphicon glyphicon-pencil" href="{{ route('pegawais.edit',$pegawai->id) }}"></a>
        
                         @csrf
                         @method('DELETE')
           
-                        <button type="submit" class="btn btn-danger">Hapus</button>
+                        <button type="submit" class="btn btn-danger glyphicon glyphicon-trash"></button>
                     </form>
                 </td>
             </tr>
@@ -262,8 +277,6 @@ tr td {
 </div>
 </div>
 </div>
-
-
 </div>
 
            
