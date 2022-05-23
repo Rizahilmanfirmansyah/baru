@@ -4,7 +4,7 @@
    
 <body  >
 <div class="container mt-5">
-   
+    
     <div class="row justify-content-center align-items-center">
         <div class="card" style="width: 50rem;">
             <div class="card-header">
@@ -177,7 +177,6 @@
                     <option value="Tetap">Pekerja Tetap</option>
                     <option value="Tidak Tetap">Pekerja Tidak tetap</option>
                     <option value="Paruh Waktu">Part-Time</option>
-
                 </select>
             </div>
            
@@ -197,6 +196,17 @@
                 <label for="berakhir">BERAKHIR</label>
                 <input type="text" name="berakhir" class="form-control" id="berakhir" aria-describedby="berakhir" placeholder="Masukan Tanggal Masuk">
             </div>
+
+            <div class="form-group">
+                <label for="penghargaan">PENGHARGAAN</label>
+                <select class="form-control" id="paket" name="paket[]" multiple="multiple" >
+                   
+                    @foreach($peng as $item)
+                    <option value="{{$item->id}}">{{$item->penghargaansip}}</option>
+                    @endforeach
+                </select>
+
+            </div>
             <button type="submit" class="btn btn-primary">Simpan</button>
             <a class="btn btn-success" href="{{ route('pegawais.index')}}">Kembali</a>
             </form>
@@ -205,4 +215,26 @@
     </div>
     </div>
 </body>
+<!--
+Css js dropdown select multiple pada penghargaan
+-->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
+    <script>
+
+        $(document).ready(function () {
+
+            $("#paket").select2({
+
+                placeholder : " Pilih"
+
+            });
+
+        });
+
+    </script>
 @endsection

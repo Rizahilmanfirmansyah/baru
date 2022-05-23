@@ -220,6 +220,8 @@
                 <th class="" >AWAL MASA KERJA</th>
                 <th class="" >TANGGAL MASUK</th>
                 <th class="" >BERAKHIR</th>
+                <th>Penghargaan</th>
+               
                 <th class="" >ACTION</th>
             </tr>
         </thead>
@@ -252,6 +254,15 @@
                 <td class="col-3">{{ $pegawai->awalmasuk}}</td>
                 <td class="col-3">{{ $pegawai->tanggalmasuk}}</td>
                 <td class="col-3">{{ $pegawai->berakhir }}</td>
+                <td>
+                <ul>
+                    @foreach($pegawai->penghargaanfungsi as $p)
+                    <li>{{$p->penghargaansip}}</li>
+                    @endforeach
+                </ul>
+                </td>
+                
+               
                 <td class="col-2">
                     <form action="{{ route('pegawais.destroy',$pegawai->id) }}" method="POST">
     

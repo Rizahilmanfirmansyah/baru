@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\pegawai;
 use App\Models\Jabatan;
 use App\Models\bank;
+use App\Models\penghargaan;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
@@ -17,7 +18,7 @@ class PegawaisController extends Controller
      */
     public function index(Request $request)
     {
-        $pegawais = pegawai::with('jabatanfungsi', 'bankfungsi')->paginate(15);
+        $pegawais = pegawai::with('jabatanfungsi', 'bankfungsi')->paginate(20);
         return view('pegawais.index', compact('pegawais')); 
     }
 
@@ -28,9 +29,10 @@ class PegawaisController extends Controller
      */
     public function create()
     {
-        $jab = Jabatan::all();
+        $jab  = Jabatan::all();
         $bank = bank::all();
-        return view('pegawais.create', compact('jab', 'bank'));                                                                                                                                                                                                                                                           
+        $peng = penghargaan::all();
+        return view('pegawais.create', compact('jab', 'bank', 'peng'));                                                                                                                                                                                                                                                           
     }
 
     /**
@@ -101,6 +103,8 @@ class PegawaisController extends Controller
 
         ]);
 
+        $pegawai->penghargaanfungsi()->attach($request->paket);
+
         return redirect()->route('pegawais.index')
             ->with('success', 'Pegawai Berhasil Ditambahkan.');
     }
@@ -126,10 +130,11 @@ class PegawaisController extends Controller
     {
         $jab = Jabatan::all();
         $bank = bank::all();
+        $penghar = penghargaan::all();
         $pegawais = pegawai::with('jabatanfungsi');
 
         //$ft = pegawai::findorfail($pegawai);
-        return view('pegawais.edit', compact('pegawai', 'jab', 'bank'));
+        return view('pegawais.edit', compact('pegawai', 'jab', 'bank', 'penghar'));
     }
 
     /**
@@ -166,65 +171,7 @@ class PegawaisController extends Controller
             'berakhir' => 'required'   
         ]);
         
-        $pegawai = pegawai::findOrFail($pegawai->id);
-
-        if($request->file('foto')== ""){
-            $pegawai->update([
-            'nama' => $request->nama,
-            'jabatan_id' => $request->jabatan_id,
-            'jk' => $request->jk,
-            'noktp' => $request->noktp,
-            'npwp' => $request->npwp,
-            'nobpjs' => $request->nobpjs,
-            'nokk' => $request->nokk,
-            'tempatlahir' => $request->tempatlahir,
-            'ttl' => $request->ttl,
-            'alamatktp' => $request->alamatktp,
-            'domisili' => $request->domisili,
-            'gaji' => $request->gaji,
-            'tanggalgaji' => $request->tanggalgaji,
-            'norek' => $request->norek,
-            'bank' => $request->bank,
-            'email' => $request->email,
-            'nohp' => $request->nohp,
-            'status' => $request->status,
-            'tanggungan' => $request->tanggungan,
-            'awalmasuk' => $request->awalmasuk,
-            'tanggalmasuk' => $request->tanggalmasuk,
-            'berakhir' => $request->berakhir
-            ]);
-        } else {
-            Storage::disk('local')->delete('/data_file/'.$pegawai->foto);
-
-            $foto = $request->file('foto');
-            $foto->storeAs('/data_file/', $foto->hashName());
-
-            $pegawai->update([
-                'foto' => $foto->hashName(),
-                'nama' => $request->nama,
-                'jabatan_id' => $request->jabatan_id,
-                'jk' => $request->jk,
-                'noktp' => $request->noktp,
-                'npwp' => $request->npwp,
-                'nobpjs' => $request->nobpjs,
-                'nokk' => $request->nokk,
-                'tempatlahir' => $request->tempatlahir,
-                'ttl' => $request->ttl,
-                'alamatktp' => $request->alamatktp,
-                'domisili' => $request->domisili,
-                'gaji' => $request->gaji,
-                'tanggalgaji' => $request->tanggalgaji,
-                'norek' => $request->norek,
-                'bank' => $request->bank,
-                'email' => $request->email,
-                'nohp' => $request->nohp,
-                'status' => $request->status,
-                'tanggungan' => $request->tanggungan,
-                'awalmasuk' => $request->awalmasuk,
-                'tanggalmasuk' => $request->tanggalmasuk,
-                'berakhir' => $request->berakhir
-            ]);
-        }
+       
         
 
 
@@ -261,6 +208,8 @@ class PegawaisController extends Controller
           //  return rederect()->route('pegawais.index')->with(['error' => 'Error']);
 
         //}
+
+        $pegawai->penghargaanfungsi()->attach($request->paket);
 
 
         $pegawai->update($request->all());
